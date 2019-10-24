@@ -19,6 +19,8 @@ namespace DataLayer.Models
 
         public DateTime ModificationDate { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public BaseModel()
         {
             CreationDate=DateTime.Now;

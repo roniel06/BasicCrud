@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CrudApi.Configuration;
+using DataLayer.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,9 +28,11 @@ namespace CrudApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureAutoMapper();
             services.AddControllers();
             services.ConfigureCors();
             services.ConfigureDbContext(Configuration);
+            services.ConfigureInjections();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
