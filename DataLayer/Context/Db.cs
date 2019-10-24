@@ -13,6 +13,13 @@ namespace DataLayer.Context
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Articles>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Person>().HasQueryFilter(x => !x.IsDeleted);
+        }
+
         public DbSet<Articles> Articles { get; set; }
 
         public DbSet<Person> Persons { get; set; }

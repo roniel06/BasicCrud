@@ -28,11 +28,13 @@ namespace CrudApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureSwagger();
             services.ConfigureAutoMapper();
             services.AddControllers();
             services.ConfigureCors();
             services.ConfigureDbContext(Configuration);
             services.ConfigureInjections();
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +54,15 @@ namespace CrudApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(x =>
+            {
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "CRUD");
+                x.RoutePrefix = "Documentation"; 
+                x.DisplayRequestDuration();
+                x.EnableFilter();
             });
         }
     }

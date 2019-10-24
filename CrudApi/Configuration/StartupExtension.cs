@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace CrudApi.Configuration
 {
@@ -31,6 +34,22 @@ namespace CrudApi.Configuration
         });
 
 
+        public static void ConfigureSwagger(this IServiceCollection srvc)
+        {
+            srvc.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "Basic CRUD",
+                    Version = "v1"
+                });
+                List<string> files = Directory.GetFiles(System.AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly).ToList();
+                files.ForEach(xml => x.IncludeXmlComments(xml));
+            });
+          
+        }
+
+
         public static void ConfigureAutoMapper(this IServiceCollection srvc)
         {
             srvc.AddAutoMapper(typeof(Startup));
@@ -41,7 +60,7 @@ namespace CrudApi.Configuration
 
         public static void ConfigureInjections(this IServiceCollection srvc)
         {
-            srvc.AddTransient<IArticleService, ArticlesService>();
+           
             srvc.AddTransient<IPersonService, PersonService>();
         }
 
