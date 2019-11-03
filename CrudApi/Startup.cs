@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CrudApi.Configuration;
 using DataLayer.Mappings;
+using DataLayer.Seeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,8 @@ namespace CrudApi
             services.ConfigureCors();
             services.ConfigureDbContext(Configuration);
             services.ConfigureInjections();
+            services.ConfigureJwt(Configuration);
+
         
         }
 
@@ -64,6 +67,7 @@ namespace CrudApi
                 x.DisplayRequestDuration();
                 x.EnableFilter();
             });
+            DbSeeding.SeedDb(app);  //Seed User
         }
     }
 }

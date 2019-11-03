@@ -23,6 +23,7 @@ namespace DataLayer.Context
         public DbSet<Articles> Articles { get; set; }
 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<ApiUsers> ApiUsers { get; set; }
             
     }
 }
